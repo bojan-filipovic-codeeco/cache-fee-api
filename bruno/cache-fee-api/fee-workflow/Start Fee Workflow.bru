@@ -1,0 +1,23 @@
+meta {
+  name: Start Fee Workflow
+  type: http
+  seq: 1
+}
+
+post {
+  url: {{restateBaseUrl}}/FeeWorkflow/1234/run
+  body: json
+  auth: inherit
+}
+
+body:json {
+  {
+    "transaction_id": "1234",
+    "amount": 200.0,
+    "asset": "SDG",
+    "asset_type": "FIAT",
+    "created_at": "2025-05-18T20:15:30",
+    "state": "SETTLED_PENDING_FEE",
+    "type": "MOBILE_TOP_UP"
+  }
+}

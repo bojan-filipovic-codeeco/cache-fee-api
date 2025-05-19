@@ -1,0 +1,133 @@
+openapi: "3.0.3"
+info:
+  title: "Cache Fee API"
+  description: "Durable fee calculation and transaction persistence using Ktor + Restate"
+  version: "1.0.0"
+
+servers:
+  - url: "http://localhost:8080"
+    description: "Restate durable service calls"
+  - url: "http://localhost:8765"
+    description: "Ktor REST API"
+
+paths:
+  /FeeWorkflow/{transactionId}/run:
+    post:
+      summary: "Start Fee Workflow"
+      description: "Triggers a durable fee calculation workflow using Restate"
+      parameters:
+        - name: transactionId
+          in: path
+          required: true
+          schema:
+            type: string
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/TransactionRequest"
+            example:
+              transaction_id: "1234"
+              amount: 200.0
+              asset: "SDG"
+              asset_type: "FIAT"
+              created_at: "2025-05-18T20:15:30"
+              state: "SETTLED_PENDING_FEE"
+              type: "MOBILE_TOP_UP"
+      responses:
+        "200":
+          description: "Fee calculation result"
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/TransactionResponse"
+
+  /transactions:
+    get:
+      summary: "Find All Transactions"
+      responses:
+        "200":
+          description: "List of all transactions"
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: "#/components/schemas/Transaction"
+
+  /transactions/{id}:
+    get:
+      summary: "Get Transaction by ID"
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: string
+      responses:
+        "200":
+          description: "Transaction object"
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Transaction"
+
+components:
+  schemas:
+    TransactionRequest:
+      type: object
+      properties:
+        transaction_id:
+          type: string
+        amount:
+          type: number
+          format: double
+        asset:
+          type: string
+        asset_type:
+          type: string
+          enum: [FIAT, CRYPTO]
+        created_at:
+          type: string
+          format: date-time
+        state:
+          type: string
+          enum: [SETTLED_PENDING_FEE, COMPLETED]
+        type:
+          type: string
+          enum: [MOBILE_TOP_UP, BANK_TRANSFER, CASH_OUT]
+
+    TransactionResponse:
+      type: object
+      properties:
+        transaction_id:
+          type: string
+        amount:
+          type: number
+          format: double
+        asset:
+          type: string
+        type:
+          type: string
+        fee:
+          type: number
+          format: double
+        rate:
+          type: number
+          format: double
+        description:
+          type: string
+
+    Transaction:
+      allOf:
+        - $ref: "#/components/schemas/TransactionResponse"
+        - type: object
+          properties:
+            asset_type:
+              type: string
+            state:
+              type: string
+            created_at:
+              type: string
+              format: date-time

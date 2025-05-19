@@ -1,0 +1,61 @@
+[versions]
+exposed-version = "0.61.0"
+hikari-version = "6.3.0"
+koin-version = "4.1.0-Beta8"
+kotlin-version = "2.1.21"
+ksp-version = "2.1.21-2.0.1"
+ktor-version = "3.1.3"
+logback-version = "1.5.18"
+postgres-version = "42.7.5"
+restate-version = "2.1.0"
+sonarqube-version = "6.2.0.5505"
+
+[libraries]
+
+# Kotlin + Test
+kotlin-test-junit = { module = "org.jetbrains.kotlin:kotlin-test-junit", version.ref = "kotlin-version" }
+
+# Ktor Server
+ktor-server-call-logging = { module = "io.ktor:ktor-server-call-logging", version.ref = "ktor-version" }
+ktor-server-config-yaml = { module = "io.ktor:ktor-server-config-yaml", version.ref = "ktor-version" }
+ktor-server-content-negotiation = { module = "io.ktor:ktor-server-content-negotiation", version.ref = "ktor-version" }
+ktor-server-core = { module = "io.ktor:ktor-server-core", version.ref = "ktor-version" }
+ktor-server-cors = { module = "io.ktor:ktor-server-cors", version.ref = "ktor-version" }
+ktor-server-netty = { module = "io.ktor:ktor-server-netty", version.ref = "ktor-version" }
+ktor-server-openapi = { module = "io.ktor:ktor-server-openapi", version.ref = "ktor-version" }
+ktor-server-test-host = { module = "io.ktor:ktor-server-test-host", version.ref = "ktor-version" }
+
+# Ktor Serialization
+ktor-serialization-kotlinx-json = { module = "io.ktor:ktor-serialization-kotlinx-json", version.ref = "ktor-version" }
+
+# Ktor HTTP Client
+ktor-client-core = { module = "io.ktor:ktor-client-core", version.ref = "ktor-version" }
+ktor-client-cio = { module = "io.ktor:ktor-client-cio", version.ref = "ktor-version" }
+ktor-client-content-negotiation = { module = "io.ktor:ktor-client-content-negotiation", version.ref = "ktor-version" }
+
+# Koin
+koin-ktor = { module = "io.insert-koin:koin-ktor3", version.ref = "koin-version" }
+koin-logger-slf4j = { module = "io.insert-koin:koin-logger-slf4j", version.ref = "koin-version" }
+
+# Logging
+logback-classic = { module = "ch.qos.logback:logback-classic", version.ref = "logback-version" }
+
+# Database
+exposed-core = { module = "org.jetbrains.exposed:exposed-core", version.ref = "exposed-version" }
+exposed-dao = { module = "org.jetbrains.exposed:exposed-dao", version.ref = "exposed-version" }
+exposed-jdbc = { module = "org.jetbrains.exposed:exposed-jdbc", version.ref = "exposed-version" }
+hikari = { module = "com.zaxxer:HikariCP", version.ref = "hikari-version" }
+postgresql = { module = "org.postgresql:postgresql", version.ref = "postgres-version" }
+
+# Restate
+restate-client-kotlin = { module = "dev.restate:client-kotlin", version.ref = "restate-version" }
+restate-ksp = { module = "dev.restate:sdk-api-kotlin-gen", version.ref = "restate-version" }
+restate-sdk = { module = "dev.restate:sdk-kotlin-http", version.ref = "restate-version" }
+restate-serde-kotlinx = { module = "dev.restate:sdk-serde-kotlinx", version.ref = "restate-version" }
+
+[plugins]
+kotlin-jvm = { id = "org.jetbrains.kotlin.jvm", version.ref = "kotlin-version" }
+kotlin-plugin-serialization = { id = "org.jetbrains.kotlin.plugin.serialization", version.ref = "kotlin-version" }
+ksp = { id = "com.google.devtools.ksp", version.ref = "ksp-version" }
+ktor = { id = "io.ktor.plugin", version.ref = "ktor-version" }
+sonarqube = { id = "org.sonarqube", version.ref = "sonarqube-version" }
